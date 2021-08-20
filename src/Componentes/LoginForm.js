@@ -21,36 +21,78 @@ export default function LoginForm() {
             width:100,
              }}
             />
-            <Input placeholder= "correo"/>
-            <Input placeholder = "contraseña"/>
-            <Button title="Entrar"/>
+            <Input placeholder= "correo" containerStyle={styles.input}
+            rightIcon={{
+                type:"material-community",
+                name:"eye-outline",
+                color:"#128c7e",
+                onPress: ()=> alert("hola"),
+            }}
+            leftIcon={{
+                type:"material-community",
+                name:"account-circle-outline",
+                color:"#128c7e",
+                
+            }}
+            />
+            <Input placeholder = "contraseña" containerStyle={styles.input}
+                leftIcon={{
+                    type:"material-community",
+                    name:"security",
+                    color:"#128c7e",
+                    
+                }}
 
-            <Text>¿no tienes cuenta?
-                <Text>{"  "} Crear Cuenta</Text>
+                rightIcon={{
+                    type:"material-community",
+                    name:"eye-outline",
+                    color:"#128c7e",
+                    onPress: ()=> alert("hola"),
+                }}
+            />
+            <Button title="Entrar"
+            containerStyle={styles.btnentrar}
+            buttonStyle={{backgroundColor:"#25d366"}}
+            />
+
+            <Text
+            style={styles.txtcrearcuenta}
+            >¿no tienes cuenta?
+                <Text
+                style={styles.cuenta}
+                >{"  "} Crear Cuenta</Text>
             </Text>
 
             <Divider 
                 style={{backgroundColor:"1287c7e", height: 1,width:"90%",marginTop:20}}
             />
-            <Text>O</Text>
+            <Text
+            style={styles.texto}
+            >O</Text>
 
-            <View>
-                <TouchableOpacity>
+            <View
+            style={styles.btnlogin}
+            >
+                <TouchableOpacity
+                style={styles.btnloginsocial}
+                >
                     <Icon 
                         size={24}
                         type="material-community"
                         name="google"
-                        color="red"
+                        color="white"
                         backgroundColor="transparent"
                     />
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity
+                 style={styles.btnloginsocial}
+                >
                     <Icon 
                         size={24}
                         type="material-community"
                         name="facebook"
-                        color="red"
+                        color="white"
                         backgroundColor="transparent"
                     />
                 </TouchableOpacity>
@@ -68,5 +110,45 @@ const styles = StyleSheet.create({
         borderTopRightRadius:50,
         alignItems:"center",//para aliniar todos los elementos al centro
         paddingTop:20,//para bajar los elemntos del contenido no tanto a la cabecera
+    },
+    input:{
+        width:'90%',
+        marginTop:20,
+        height:50
+    },
+    btnentrar:{
+        width:"50%",
+        marginTop:20,
+
+    },
+    txtcrearcuenta:{
+        marginTop:20,
+
+    },
+    cuenta:{
+        color:"#128c7e",
+        fontFamily:"Roboto", //no lo reconoce mac
+        fontSize: 15,
+    },
+    texto:{
+        fontWeight:"bold",
+        fontSize:20,
+        marginTop:20,
+        color:"#128c7e"
+    },
+    btnlogin:{
+        flexDirection:"row", //los bonotes en fila
+        justifyContent:"space-around",//distribuye los elementos a lo largo de la pantalla
+        width:"100%", //para que se distribuyan mejor
+
+
+
+    },
+    btnloginsocial:{
+        backgroundColor:"#25d366",
+        paddingHorizontal:40,
+        paddingVertical:10,
+        borderRadius:10
+
     }
 })
