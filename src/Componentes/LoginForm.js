@@ -2,16 +2,51 @@ import React,{useState} from 'react'
 //touchable opacity el boton
 import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
 import { Icon,Input,Button,Divider } from 'react-native-elements'
-import { useNavigation } from '@react-navigation/native'
+import { NavigationContainer, useNavigation } from '@react-navigation/native'
+import {validateEmail} from '../utils/Uitl'
+import {isEmpty} from 'lodash'
+//si el valor de una variable esta vacio y devuelve un boolean
+import { validarsesion } from '../utils/Acciones'
+import * as firebase from 'firebase';
+//trae todos los mdetodos de firabase
 
 
-export default function LoginForm() {
+
+
+
+export default function LoginForm(props) {
+
+    const {toastRef} = props
 
     //guarda los valores de los formularios
-    const [email, setemail] = useState("");
-    const [password, setpassword] = useState("")
+    const [email1, setemail] = useState("");
+    const [password1, setpassword] = useState("")
+
+    const navigation = useNavigation();
 
 
+    validarsesion();
+
+    
+    //funcion que se encargara de verficar los campos vacios
+    //y demás validaciones del formulario
+    const iniciarsesion = () => {
+        if (isEmpty(email1) || isEmpty(password1)) {
+          toastRef.current.show("Debe ingresar los valores de email y password");
+        } else if (!validateEmail(email1)) {
+          toastRef.current.show("Ingrese un correo válido");
+        } else{
+
+            firebase.auth().signInWithEmailAndPassword(email1,password1)
+            .then(() =>{
+                console.log("todo bien")
+            })
+            .catch((err) =>{
+                console.log(err)
+                toastRef.current.show("El usuario o la contraseña es incorrecta");
+            })
+        }
+      };
 
     return (
         <View style={styles.container}>
@@ -24,7 +59,7 @@ export default function LoginForm() {
             <Input placeholder= "correo" containerStyle={styles.input}
             rightIcon={{
                 type:"material-community",
-                name:"eye-outline",
+                name:"at",
                 color:"#128c7e",
                 onPress: ()=> alert("hola"),
             }}
@@ -53,6 +88,7 @@ export default function LoginForm() {
             <Button title="Entrar"
             containerStyle={styles.btnentrar}
             buttonStyle={{backgroundColor:"#25d366"}}
+            onPress={()=> iniciarsesion()}
             />
 
             <Text
@@ -60,6 +96,7 @@ export default function LoginForm() {
             >¿no tienes cuenta?
                 <Text
                 style={styles.cuenta}
+                onPress={()=> navigation.navigate('register')}
                 >{"  "} Crear Cuenta</Text>
             </Text>
 
