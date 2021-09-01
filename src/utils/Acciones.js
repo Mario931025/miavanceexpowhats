@@ -3,15 +3,33 @@
 import { firebaseapp } from "./Firebase";
 import * as firebase from 'firebase'
 
-export const validarsesion = () => {
+export const validarsesion = (setvalidarsesion) => {
 
     firebase.auth().onAuthStateChanged((user)=>{
 
         if(user)
         {
-            console.log("usuario logeado")
+           setvalidarsesion(true)
         }else{
-            console.log("no ha inisiado sesión")
+            setvalidarsesion(false)
+        }
+    })
+}
+
+
+export const cerrarsesion = () => {
+    firebase.auth().signOut();
+    console.log("cerro sesión")
+}
+
+
+export const validarPhone = (setphoneauth) => {
+
+    firebase.auth().onAuthStateChanged((user)=>{
+
+        if(user.phoneNumber)
+        {
+            setphoneauth(true)
         }
     })
 }
